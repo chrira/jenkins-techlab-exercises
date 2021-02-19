@@ -6,10 +6,13 @@ pipeline {
         timestamps()  // Timestamper Plugin
         disableConcurrentBuilds()
     }
+    parameters {
+        string(name: 'Greetings_to', defaultValue: 'Jenkins Techlab', description: 'Who to greet?')
+    }
     stages {
         stage('Greeting') {
             steps {
-                echo 'Hello, World!'
+                echo "Hello, ${params.Greetings_to}!"
             }
         }
     }

@@ -1,6 +1,6 @@
 properties([
     parameters([
-        string(name: 'COMPANY_PARAMETER', defaultValue: 'puzzle', description: 'The company the pipeline runs in')
+        string(name: 'company_parameter', defaultValue: 'puzzle', description: 'The company the pipeline runs in')
     ])
 ])
 

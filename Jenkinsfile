@@ -7,7 +7,10 @@ timestamps() {
     timeout(time: 10, unit: 'MINUTES') {
         node {
             stage('Greeting') {
-                echo 'Hello, World!'
+                withEnv(["JAVA_HOME=${tool 'jdk11'}", "PATH+MAVEN=${tool 'maven35'}/bin:${env.JAVA_HOME}/bin"]) {
+                    sh "java -version"
+                    sh "mvn --version"
+                }
             }
         }
     }

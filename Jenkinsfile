@@ -1,6 +1,8 @@
 properties([
-  buildDiscarder(logRotator(numToKeepStr: '5')),
-  disableConcurrentBuilds()
+    buildDiscarder(logRotator(numToKeepStr: '5')),
+    pipelineTriggers([
+        pollSCM('H/5 * * * *')
+    ])
 ])
 
 timestamps() {

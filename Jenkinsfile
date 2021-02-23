@@ -27,7 +27,7 @@ pipeline {
     }
     post {
         always {
-            notifyPuzzleChat('jenkins-techlab')
+            notifyPuzzleChat('general')
         }
     }
 }

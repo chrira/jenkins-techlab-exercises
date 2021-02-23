@@ -7,7 +7,7 @@ pipeline {
         disableConcurrentBuilds()
     }
     parameters {
-        string(name: 'Greetings_to', defaultValue: 'Jenkins Techlab', description: 'Who to greet?')
+        string(name: 'Greetings_to', defaultValue: null, description: 'Who to greet?')
     }
     stages {
         stage('Greeting') {

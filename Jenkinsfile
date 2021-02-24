@@ -9,9 +9,6 @@ pipeline {
         disableConcurrentBuilds()
     }
     environment{
-        M2_SETTINGS = credentials('m2_settings')
-        KNOWN_HOSTS = credentials('known_hosts')
-        ARTIFACTORY = credentials('jenkins-artifactory')
         ARTIFACT = "${env.JOB_NAME.split('/')[0]}-hello"
         REPO_URL = 'https://artifactory.puzzle.ch/artifactory/ext-release-local'
     }
@@ -45,12 +42,8 @@ pipeline {
             steps {
                 input "Deploy?"
                 milestone(30)  // Abort all older builds that didn't get here
-                sh "mvn -s '${M2_SETTINGS}' -B deploy:deploy-file -DrepositoryId='puzzle-releases' -Durl='${REPO_URL}' -DgroupId='com.puzzleitc.jenkins-techlab' -DartifactId='${ARTIFACT}' -Dversion='1.0' -Dpackaging='jar' -Dfile=`echo target/*.jar`"
-
-                sshagent(['testserver']) {
-                    sh "ls -l target"
-                    sh "ssh -o UserKnownHostsFile='${KNOWN_HOSTS}' -p 2222 richard@testserver.vcap.me 'curl -O -u \'${ARTIFACTORY}\' ${REPO_URL}/com/puzzleitc/jenkins-techlab/${ARTIFACT}/1.0/${ARTIFACT}-1.0.jar && ls -l'"
-                }
+                echo 'deploy to artifactory'
+                echo 'deploy on test server'
             }
         }
     }

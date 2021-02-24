@@ -64,7 +64,7 @@ pipeline {
                         openshift.withCredentials("openshift-jenkins-external") {
                             openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
-                                def bcSelector = openshift.selector("BuildConfiguration", [ app : env.APP_LABEL ]) // select build
+                                def bcSelector = openshift.selector("BuildConfig", [ app : env.APP_LABEL ]) // select build
                                 bcSelector.startBuild('--follow').out
                             }
                         }

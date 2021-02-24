@@ -38,7 +38,7 @@ public class HelloWithTestsIT {
         String[] args = {"1"};
         HelloApp.main(args);
 
-        assertThat(out.toString(), is(String.format("%s%s", Hello.HELLO, System.lineSeparator())));
+        assertThat(out.toString(), is(String.format("%s%s", Hello.HELLO + "d", System.lineSeparator())));
     }
 
     @Test

@@ -49,8 +49,7 @@ pipeline {
                         openshift.withCredentials("openshift-jenkins-external") {
                             openshift.withProject("craaflaub-amm-test") {
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
-                                def configuration = openshift.raw('convert', '-f', 'config/')
-                                openshift.apply(configuration, '-l', "app=${APP_LABEL}", '--prune')
+                                openshift.apply('-f', 'config/', '-l', "app=${APP_LABEL}", '--prune')
                             }
                         }
                     }

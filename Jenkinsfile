@@ -7,18 +7,18 @@ pipeline {
         disableConcurrentBuilds()
     }
     tools {
-        jdk 'jdk11'
-        maven 'maven36'
+        oc 'oc'
     }
     stages {
-        stage('Build') {
+        stage('oc test') {
             steps {
+                println "PATH: ${PATH}"
 
-                sh 'java -version'
+                println "OC Version from Shell, must be available:"
+                sh "oc version"
 
-                sh 'javac -version'
-
-                sh 'mvn --version'
+                println "which oc"
+                sh "which oc"
             }
         }
     }

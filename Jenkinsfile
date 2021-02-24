@@ -50,7 +50,7 @@ pipeline {
                         openshift.withCredentials("openshift-jenkins-external") {
                             openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
-                                println openshift.apply('-f', 'config/', '-l', "app=${APP_LABEL}").out
+                                println openshift.apply('-f', 'config/').out
                             }
                         }
                     }

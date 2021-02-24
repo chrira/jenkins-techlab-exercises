@@ -9,6 +9,9 @@ pipeline {
     tools {
         oc 'oc4'
     }
+    environment {
+        APP_LABEL = 'Jenkins Techlab'
+    }
     stages {
         stage('oc test') {
             steps {
@@ -33,6 +36,21 @@ pipeline {
                                 println openshift.raw('get','project').out
                                 println openshift.raw('status').out
                                 println openshift.raw('get','pod').out
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('oc apply configuration') {
+            steps {
+                script {
+                    openshift.withCluster("my-cluster") {
+                        openshift.withCredentials("openshift-jenkins-external") {
+                            openshift.withProject("craaflaub-amm-test") {
+                                echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
+                                def configuration = openshift.raw('convert', '-f', 'config/')
+                                openshift.apply(configuration, '-l', "app=${APP_LABEL}", '--prune')
                             }
                         }
                     }

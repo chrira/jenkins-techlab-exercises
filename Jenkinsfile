@@ -7,7 +7,7 @@ pipeline {
         disableConcurrentBuilds()
     }
     tools {
-        oc 'oc'
+        oc 'oc4'
     }
     stages {
         stage('oc test') {

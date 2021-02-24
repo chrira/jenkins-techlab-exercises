@@ -11,6 +11,7 @@ pipeline {
     }
     environment {
         APP_LABEL = 'my-app'
+        OPENSHIFT_PROJECT = 'craaflaub-amm-test'
     }
     stages {
         stage('oc test') {
@@ -29,7 +30,7 @@ pipeline {
                 script {
                     openshift.withCluster("my-cluster") {
                         openshift.withCredentials("openshift-jenkins-external") {
-                            openshift.withProject("craaflaub-amm-test") {
+                            openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 println "OC Version from Plugin:"
                                 println openshift.raw('version').out
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
@@ -47,7 +48,7 @@ pipeline {
                 script {
                     openshift.withCluster("my-cluster") {
                         openshift.withCredentials("openshift-jenkins-external") {
-                            openshift.withProject("craaflaub-amm-test") {
+                            openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
                                 println openshift.apply('-f', 'config/', '-l', "app=${APP_LABEL}").out
                             }
@@ -56,5 +57,24 @@ pipeline {
                 }
             }
         }
+        stage('build application') {
+            steps {
+                script {
+                    openshift.withCluster("my-cluster") {
+                        openshift.withCredentials("openshift-jenkins-external") {
+                            openshift.withProject(env.OPENSHIFT_PROJECT) {
+                                echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
+                                def bcSelector = openshift.selector("BuildConfiguration", [ app : env.APP_LABEL ]) // select build
+                                bcSelector.startBuild('--follow').out
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
     }
 }

@@ -21,5 +21,22 @@ pipeline {
                 sh "which oc"
             }
         }
+        stage('oc login') {
+            steps {
+                script {
+                    openshift.withCluster("my-cluster") {
+                        openshift.withCredentials("openshift-jenkins-external") {
+                            openshift.withProject("craaflaub-amm-test") {
+                                println "OC Version from Plugin:"
+                                println openshift.raw('version').out
+                                echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
+                                println openshift.raw('get','project').out
+                                println openshift.raw('get','pod').out
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

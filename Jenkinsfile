@@ -10,7 +10,7 @@ pipeline {
         oc 'oc4'
     }
     environment {
-        APP_LABEL = 'Jenkins Techlab'
+        APP_LABEL = 'my-app'
     }
     stages {
         stage('oc test') {

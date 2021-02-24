@@ -48,3 +48,19 @@ items:
       targetPort: 8443
     selector:
       deployment: application
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    labels:
+      app: my-app
+    name: application
+  spec:
+    port:
+      targetPort: 8080-tcp
+    tls:
+      termination: edge
+    to:
+      kind: Service
+      name: application
+      weight: 100
+    wildcardPolicy: None

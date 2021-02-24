@@ -31,6 +31,7 @@ pipeline {
                                 println openshift.raw('version').out
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
                                 println openshift.raw('get','project').out
+                                println openshift.raw('status').out
                                 println openshift.raw('get','pod').out
                             }
                         }

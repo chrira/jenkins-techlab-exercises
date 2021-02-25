@@ -46,8 +46,8 @@ pipeline {
         stage('oc apply configuration') {
             steps {
                 script {
-                    openshift.withCluster("my-cluster") {
-                        openshift.withCredentials("openshift-jenkins-external") {
+                    openshift.withCluster("my-cluster2") {
+                        openshift.withCredentials("openshift-jenkins-external2") {
                             openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
                                 println openshift.apply('-f', 'config/', '-l', "app=${APP_LABEL}").out
@@ -60,8 +60,8 @@ pipeline {
         stage('build application') {
             steps {
                 script {
-                    openshift.withCluster("my-cluster") {
-                        openshift.withCredentials("openshift-jenkins-external") {
+                    openshift.withCluster("my-cluster2") {
+                        openshift.withCredentials("openshift-jenkins-external2") {
                             openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
                                 def bcSelector = openshift.selector("BuildConfig", [ app : env.APP_LABEL ]) // select build

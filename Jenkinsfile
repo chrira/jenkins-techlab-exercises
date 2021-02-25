@@ -11,12 +11,18 @@ pipeline {
         disableConcurrentBuilds()
     }
     stages {
-        stage('Build') {
+        stage('Info') {
             steps {
                 sh  """#!/bin/bash
                     ruby --version
                     bundle --version
                 """
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'bundle install'
+                }
             }
         }
     }

@@ -11,6 +11,8 @@ pipeline {
     }
     environment {
         APP_LABEL = 'my-app'
+        OPENSHIFT_CLUSTER = 'my-cluster2'
+        OPENSHIFT_CREDENTIALS = 'openshift-jenkins-external2'
         OPENSHIFT_PROJECT = 'hannelore12-dev'
     }
     stages {
@@ -28,8 +30,8 @@ pipeline {
         stage('oc login') {
             steps {
                 script {
-                    openshift.withCluster("my-cluster2") {
-                        openshift.withCredentials("openshift-jenkins-external2") {
+                    openshift.withCluster(env.OPENSHIFT_CLUSTER) {
+                        openshift.withCredentials(env.OPENSHIFT_CREDENTIALS) {
                             openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 println "OC Version from Plugin:"
                                 println openshift.raw('version').out
@@ -46,8 +48,8 @@ pipeline {
         stage('oc apply configuration') {
             steps {
                 script {
-                    openshift.withCluster("my-cluster2") {
-                        openshift.withCredentials("openshift-jenkins-external2") {
+                    openshift.withCluster(env.OPENSHIFT_CLUSTER) {
+                        openshift.withCredentials(env.OPENSHIFT_CREDENTIALS) {
                             openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
                                 println openshift.apply('-f', 'config/', '-l', "app=${APP_LABEL}").out
@@ -60,8 +62,8 @@ pipeline {
         stage('build application') {
             steps {
                 script {
-                    openshift.withCluster("my-cluster2") {
-                        openshift.withCredentials("openshift-jenkins-external2") {
+                    openshift.withCluster(env.OPENSHIFT_CLUSTER) {
+                        openshift.withCredentials(env.OPENSHIFT_CREDENTIALS) {
                             openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
                                 def bcSelector = openshift.selector("BuildConfig", [ app : env.APP_LABEL ]) // select build

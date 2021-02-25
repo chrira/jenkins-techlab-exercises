@@ -11,7 +11,7 @@ pipeline {
     }
     environment {
         APP_LABEL = 'my-app'
-        OPENSHIFT_PROJECT = 'craaflaub-amm-test'
+        OPENSHIFT_PROJECT = 'hannelore12-dev'
     }
     stages {
         stage('oc test') {
@@ -28,8 +28,8 @@ pipeline {
         stage('oc login') {
             steps {
                 script {
-                    openshift.withCluster("my-cluster") {
-                        openshift.withCredentials("openshift-jenkins-external") {
+                    openshift.withCluster("my-cluster2") {
+                        openshift.withCredentials("openshift-jenkins-external2") {
                             openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 println "OC Version from Plugin:"
                                 println openshift.raw('version').out

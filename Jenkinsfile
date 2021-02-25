@@ -24,5 +24,10 @@ pipeline {
                 sh 'bundle install'
             }
         }
+        stage('Test') {
+            steps {
+                sh 'rake ci:all'
+            }
+        }
     }
 }

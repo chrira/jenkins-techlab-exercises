@@ -19,10 +19,9 @@ pipeline {
                 """
             }
         }
-        stage('build') {
+        stage('Build') {
             steps {
                 sh 'bundle install'
-                }
             }
         }
     }

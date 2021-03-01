@@ -67,9 +67,11 @@ pipeline {
                             openshift.withProject(env.OPENSHIFT_PROJECT) {
                                 echo "Hello from project ${openshift.project()} in cluster ${openshift.cluster()}"
                                 // update image of deployment to latest built image (built in previous stage)
-                                println openshift.raw("oc set image deployment/application application=image-registry.openshift-image-registry.svc:5000/${OPENSHIFT_PROJECT}/application:latest").out
-                                // do application deployment
-                                println openshift.raw('oc rollout restart deploy application').out
+                                println openshift.raw("set image deployment/application application=image-registry.openshift-image-registry.svc:5000/${OPENSHIFT_PROJECT}/application:latest").out
+                                // start the application deployment
+                                println openshift.raw('rollout restart deploy/application').out
+                                // wait for the application deployment
+                                println openshift.raw('rollout status deploy/application').out
                             }
                         }
                     }

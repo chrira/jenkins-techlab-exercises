@@ -11,8 +11,8 @@ pipeline {
     }
     environment {
         APP_LABEL = 'my-app'
-        OPENSHIFT_CLUSTER = 'my-cluster2'
-        OPENSHIFT_CREDENTIALS = 'openshift-jenkins-external2'
+        OPENSHIFT_CLUSTER = 'my-cluster'
+        OPENSHIFT_CREDENTIALS = 'openshift-jenkins-external'
         OPENSHIFT_PROJECT = 'hannelore12-dev'
     }
     stages {
